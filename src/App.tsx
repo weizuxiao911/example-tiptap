@@ -1,5 +1,6 @@
+import './index.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Editor } from './component/editor'
+import { Editor } from './pages/editor'
 
 function App() {
   return (

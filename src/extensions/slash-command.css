@@ -1,16 +1,3 @@
-.tiptap .is-empty::before {
-    color: #adb5bd;
-    content: attr(data-placeholder);
-    float: left;
-    height: 0;
-    pointer-events: none;
-}
-
-.editor-content {
-    padding: 5px;
-    box-sizing: border-box;
-}
-
 .slash-command {
     display: flex;
     flex-direction: column;
@@ -67,8 +54,4 @@
 
 .slash-command::-webkit-scrollbar {
     display: none;
-}
-
-.tiptap:focus {
-    outline: none;
 }

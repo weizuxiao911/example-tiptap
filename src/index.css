@@ -11,3 +11,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.tiptap {
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.tiptap:focus {
+  outline: none;
+}
+
+.tiptap .is-empty::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}

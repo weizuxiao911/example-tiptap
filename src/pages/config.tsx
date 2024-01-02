@@ -1,22 +1,30 @@
-import { EditorProps } from "@tiptap/pm/view"
+import { EditorProps, EditorView } from "@tiptap/pm/view"
+import { Slice } from "@tiptap/pm/model"
+import StarterKit from "@tiptap/starter-kit"
+import Placeholder from "@tiptap/extension-placeholder"
+import SlashCommand from "../extensions/slash-command"
+import DragAndDrop from "../extensions/drag-and-drop"
+import CustomKeyboardShortcuts from "../extensions/keyboard-shortcuts"
+import Action from "../extensions/action"
+
+export const extensions = [
+    StarterKit,
+    Action,
+    Placeholder.configure({
+        placeholder: ({ node }: any) => {
+            if (node.type.name === 'paragraph') {
+                return `输入“/”可唤起工具面板...`
+            }
+            return ''
+        },
+    }),
+    SlashCommand,
+    DragAndDrop,
+    CustomKeyboardShortcuts,
+]
 
 export const editorProps: EditorProps = {
-    attributes: {
-        class: 'editor-content'
-    },
-    handleDOMEvents: {
-        // prevent default event listeners from firing when slash-command is active
-        keydown: (_view, event) => {
-            // prevent default event listeners from firing when slash command is active
-            if (["ArrowUp", "ArrowDown", "Enter"].includes(event.key)) {
-                const slashCommand = document.querySelector("#slash-command");
-                if (slashCommand) {
-                    return true;
-                }
-            }
-        }
-    },
-    handlePaste: (view, event) => {
+    handlePaste: (view: EditorView, event: ClipboardEvent) => {
         if (
             event.clipboardData &&
             event.clipboardData.files &&
@@ -28,9 +36,11 @@ export const editorProps: EditorProps = {
             // startImageUpload(file, view, pos);
             return true;
         }
+        console.log('paste')
         return false;
     },
-    handleDrop: (view, event, _slice, moved) => {
+
+    handleDrop: (view: EditorView, event: DragEvent, slice: Slice, moved: boolean) => {
         if (
             !moved &&
             event.dataTransfer &&
@@ -47,6 +57,7 @@ export const editorProps: EditorProps = {
             // startImageUpload(file, view, coordinates?.pos || 0 - 1);
             return true;
         }
+        console.log('drop')
         return false;
     },
 }
